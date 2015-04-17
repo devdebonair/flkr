@@ -1,4 +1,4 @@
-# FLKR - Recommendation System
+# FLKR - Movie Recommendation System
 ------------------------------
 
 ## Goal
