@@ -74,3 +74,10 @@ The Database class connects to the database using the mysql jar file located in 
 
 ###FLKR_CLI
 This will be the driver that will run the command line interface. This file is incomplete.
+
+
+##Commands to run
+javac Main.java
+java -cp ".:lib/*" Main
+
+If you are using eclipse make sure to load the jdbc.jar file in the /lib folder and run Main.java
