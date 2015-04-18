@@ -88,21 +88,21 @@ public class Main
 
         Database db = new Database();
         System.out.println("Inserting into movie table...");
-        db.executeBatch(queries[0], movies, 1000);
+        db.executeBatch(queries[0], movies, 2000);
         System.out.println("Inserting into actor table...");
-        db.executeBatch("insert into actor (id, actor_name) values (?,?)", actors_single_array, 1000);
+        db.executeBatch("insert into actor (id, actor_name) values (?,?)", actors_single_array, 2000);
         System.out.println("Inserting into director table...");
-        db.executeBatch("insert into director (id, director_name) values (?,?)", directors_single_array, 1000);
+        db.executeBatch("insert into director (id, director_name) values (?,?)", directors_single_array, 2000);
         System.out.println("Inserting into tag table...");
         db.executeBatch(queries[5], tagItems, 1000);
         System.out.println("Inserting into movie_actor table...");
-        db.executeBatch(queries[1], actors, 1000);
+        db.executeBatch(queries[1], actors, 2000);
         System.out.println("Inserting into movie_director table...");
-        db.executeBatch(queries[2], directors, 1000);
+        db.executeBatch(queries[2], directors, 2000);
         System.out.println("Inserting into movie_genres table...");
-        db.executeBatch(queries[3], genres, 1000);
+        db.executeBatch(queries[3], genres, 2000);
         System.out.println("Inserting into movie_tags table...");
-        db.executeBatch(queries[4], tags, 1000);
+        db.executeBatch(queries[4], tags, 2000);
         System.out.println("Database has been set up.");
     }
 
