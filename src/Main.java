@@ -1,8 +1,13 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main
 {
     public static void main(String[] args)
     {
+        Scanner scan = new Scanner(System.in);
         String[][] movies;
         String[][] actors;
         String[][] directors;
@@ -41,58 +46,81 @@ public class Main
         tagItems = reader.getItemsToInsert();
         queries[5] = reader.getQuery();
 
-        //Find unique actors
-        System.out.println("Filtering unique actors... This may take a while");
-        ArrayList<ArrayList<String>> actors_single = new ArrayList<ArrayList<String>>();
-        outer_loop:
+        // find unique actors
+        System.out.println("Filtering unique actors");
+        HashMap<String, String> map = new HashMap<String, String>();
         for(int i = 0; i < actors.length; i++)
         {
-            for(int j = 0; j < actors_single.size(); j++)
+            if(map.containsKey(actors[i][1]))
             {
-                //If the actor_id has already been added to the actors database
-                if(actors_single.get(j).contains(actors[i][1]))
-                {
-                    continue outer_loop;
-                }
+                continue;
             }
-            //Make array list out of the selected row and columns from movie_actor database
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.add(actors[i][1]);
-            temp.add(actors[i][2]);
-            actors_single.add(temp);
+            map.put(actors[i][1], actors[i][2]);
         }
 
-        //Find unique directors
-        System.out.println("Filtering unique directors... This may take a while");
-        ArrayList<ArrayList<String>> directors_single = new ArrayList<ArrayList<String>>();
-        outer_loop:
+        // convert actors map to 2D array
+        String[][] actors_single = new String[map.size()][2];
+        int index = 0;
+        for (String key : map.keySet())
+        {
+            actors_single[index][0] = key;
+            actors_single[index][1] = map.get(key);
+            index++;
+        }
+
+        // find unique directors
+        System.out.println("Filtering unique directors");
+        map = new HashMap<String,String>();
         for(int i = 0; i < directors.length; i++)
         {
-            for(int j = 0; j < directors_single.size(); j++)
+            if(map.containsKey(directors[i][1]))
             {
-                //If the director_id has already been added to the directors database
-                if(directors_single.get(j).contains(directors[i][1]))
-                {
-                    continue outer_loop;
-                }
+                continue;
             }
-            //Make array list out of the selected row and columns from movie_director database
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.add(directors[i][1]);
-            temp.add(directors[i][2]);
-            directors_single.add(temp);
+            map.put(directors[i][1], directors[i][2]);
+        }
+        // convert directors map to 2D array
+        String[][] directors_single = new String[map.size()][2];
+        index = 0;
+        for(String key : map.keySet())
+        {
+            directors_single[index][0] = key;
+            directors_single[index][1] = map.get(key);
+            index++;
         }
 
-        String[][] actors_single_array = convertTo2D(actors_single);
-        String[][] directors_single_array = convertTo2D(directors_single);
+        // get username and password
+        System.out.println("Have you set a password for mysql? (yes/no)");
+        String username = null;
+        String password = null;
+        String database_name = null;
+        if(scan.next().equals("yes"))
+        {
+            System.out.println("What is your username?");
+            username = scan.next();
+            System.out.println("What is your password?");
+            password = scan.next();
+            System.out.println("What is the name of the database that you would like to connect to or create?");
+            database_name = scan.next();
+        }
+        scan.close();
 
-        Database db = new Database();
+        // create instance of database
+        Database db;
+        if(username != null && password != null && database_name != null)
+        {
+            db = new Database(username, password, database_name);
+        }
+        else
+        {
+            db = new Database();
+        }
         System.out.println("Inserting into movie table...");
         db.executeBatch(queries[0], movies, 2000);
         System.out.println("Inserting into actor table...");
-        db.executeBatch("insert into actor (id, actor_name) values (?,?)", actors_single_array, 2000);
+        db.executeBatch("insert into actor (id, actor_name) values (?,?)", actors_single, 2000);
         System.out.println("Inserting into director table...");
-        db.executeBatch("insert into director (id, director_name) values (?,?)", directors_single_array, 2000);
+        db.executeBatch("insert into director (id, director_name) values (?,?)", directors_single, 2000);
         System.out.println("Inserting into tag table...");
         db.executeBatch(queries[5], tagItems, 1000);
         System.out.println("Inserting into movie_actor table...");
