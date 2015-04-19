@@ -1,5 +1,5 @@
 import java.sql.*;
-import java.util.List;
+import java.util.HashMap;
 
 public class Database
 {
@@ -88,6 +88,7 @@ public class Database
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/flkr", this.username, this.password);
             Statement createSchemaStatement = connection.createStatement();
 
+            // sql statements to create tables
             String sqlTableMovie = "CREATE TABLE IF NOT EXISTS movie " +
                                         "(id INTEGER," +
                                         "title_english VARCHAR(255)," +
@@ -151,7 +152,8 @@ public class Database
                                         "tag_weight INTEGER," +
                                         "FOREIGN KEY (tag_id) REFERENCES tag(id)," +
                                         "FOREIGN KEY (movie_id) REFERENCES movie(id))";
-
+            
+            //create database tables
             System.out.println("Creating movie Table....");
             createSchemaStatement.executeUpdate(sqlTableMovie);
             System.out.println("Creating actor Table....");
@@ -225,15 +227,32 @@ public class Database
         return null;
     }
 
-    public String getMovie(int limit)
+    public HashMap<String,String> getMovie(String title, int limit)
     {
-        return null;
+        try
+        {
+            String query = "SELECT title, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title LIKE " + title;
+            Statement statement = this.connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("title", result.getString(1));
+            map.put("year", result.getString(2));
+            map.put("rt_audience_score", result.getString(3));
+            map.put("image_url_rt", result.getString(4));
+            map.put("image_url_imdb", result.getString(5));
+            return map;
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return null;
+        }
     }
 
     public String getGenre(int limit)
     {
         return null;
-    }
+     }
 
     public String getDirector(int limit)
     {
