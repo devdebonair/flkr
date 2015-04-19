@@ -133,15 +133,4 @@ public class Main
         db.executeBatch(queries[4], tags, 2000);
         System.out.println("Database has been set up.");
     }
-
-    public static String[][] convertTo2D(ArrayList<ArrayList<String>> lists)
-    {
-        String[][] array = new String[lists.size()][];
-        String[] blankArray = new String[0];
-        for(int i = 0; i < lists.size(); i++)
-        {
-            array[i] = lists.get(i).toArray(blankArray);
-        }
-        return array;
-    }
 }
