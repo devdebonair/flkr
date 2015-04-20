@@ -365,9 +365,33 @@ public class Database
         }
     }
 
-    public String getTag(int limit)
+    public LinkedList<HashMap<String, String>> getTag(String tagName)
     {
-        return null;
+        try
+        {
+            String query = "SELECT m.title_english, m.title_spanish, m.year, m.rt_audience_score, m.image_url_rt, m.image_url_imdb FROM movie AS m, tag AS t, movie_tag AS mt WHERE t.id = mt.tag_id AND m.id = mt.movie_id AND t.tag_name = '" + tagName + "'";
+            Statement statement = this.connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
+            HashMap<String, String> map;
+            while(result.next())
+            {
+                map = new HashMap<String, String>();
+                map.put("title_english", result.getString(1));
+                map.put("title_spanish", result.getString(2));
+                map.put("rt_audience_score", result.getString(3));
+                map.put("year", result.getString(4));
+                map.put("image_url_rt", result.getString(5));
+                map.put("image_url_imdb", result.getString(6));
+                listOfResults.add(map);
+            }
+            return listOfResults;
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return null;
+        }
     }
 
     public String getTopDirectors(int limit)

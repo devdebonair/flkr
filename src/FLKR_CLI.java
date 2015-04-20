@@ -115,7 +115,18 @@ public class FLKR_CLI
                                 System.out.println();
                             }
                             break;
-                case 6:     //System.out.printf("%s\n\n", db.getTag());
+                case 6:     
+                            System.out.println("Enter a tag.");
+                            String tagName = scan.nextLine();
+                            result = db.getActor(tagName);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));   
+                                }
+                                System.out.println();
+                            }
                             break;
                 case 7:     //System.out.printf("%s\n\n", db.getTopDirectors());
                             break;
