@@ -111,14 +111,9 @@ public class Main
             createSqlFile(tagItems, "tag", queries[5]);
             createSqlFile(actors_single, "actor", "insert into actor (id, actor_name) values (?,?)");
             createSqlFile(directors_single, "director", "insert into director (id, director_name) values (?,?)");
-            System.out.println("Would you like to insert data files into database. This may take a while. (yes/no)");
-            answer = scan.next();
-            if(answer.equals("no"))
-            {
-                System.out.println("Ending program.");
-                System.exit(1);
-            }
         }
+        
+
         // get username and password
         System.out.println("Have you set a password for mysql? (yes/no)");
         String username = null;
@@ -145,6 +140,15 @@ public class Main
         {
             db = new Database();
         }
+
+        System.out.println("Would you like to insert data files into database. This may take a while. (yes/no)");
+        answer = scan.next();
+        if(answer.equals("no"))
+        {
+            System.out.println("Ending program.");
+            System.exit(0);
+        }
+        
         System.out.println("Inserting into movie table...");
         db.executeBatch(queries[0], movies, 2000);
         System.out.println("Inserting into actor table...");
