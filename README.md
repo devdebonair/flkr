@@ -89,6 +89,5 @@ java -cp ":../lib/*" FLKR_CLI
 #**Notes
 - Make sure your mysql server is running.
 - If you made a password for mysql, you will have to input that information
-
-
-If you are using eclipse make sure to load the jdbc.jar file in the /lib folder and run Main.java
+- If you are using eclipse make sure to load the jdbc.jar file in the /lib folder and run Main.java
+- If the program takes more than 20 minutes to insert into the data into the database, let the program write the sql files and run 	those in mysql workbench
