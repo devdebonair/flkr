@@ -225,19 +225,19 @@ public class Database
     //Queries
     public LinkedList<HashMap> getTopMovies(int limit)
     {
-        String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb ORDER BY rt_audience_score DESC LIMIT 0, 20";
-        Statement statement = this.connection.createStatement();
-        ResultSet result = statement.executeQuery(query);
-        LinkedList<HashMap> listOfResults = new LinkedList<HashMap>();
-        while(result.next())
-        {
+        // String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb ORDER BY rt_audience_score DESC LIMIT 0, 20";
+        // Statement statement = this.connection.createStatement();
+        // ResultSet result = statement.executeQuery(query);
+        // LinkedList<HashMap> listOfResults = new LinkedList<HashMap>();
+        // while(result.next())
+        // {
 
-        }
-        HashMap<String, String> map = new HashMap<String, String>();
-
+        // }
+        // HashMap<String, String> map = new HashMap<String, String>();
+        return null;
     }
 
-    public LinkedList<> getMovie(String title, int limit)
+    public LinkedList<HashMap> getMovie(String title, int limit)
     {
         try
         {
@@ -250,7 +250,9 @@ public class Database
             map.put("rt_audience_score", result.getString(3));
             map.put("image_url_rt", result.getString(4));
             map.put("image_url_imdb", result.getString(5));
-            return map;
+            LinkedList<HashMap> listOfResults = new LinkedList<HashMap>();
+            listOfResults.add(map);
+            return listOfResults;
         }
         catch(Exception e)
         {
