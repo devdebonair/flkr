@@ -1,16 +1,10 @@
 public class ReaderGenre extends Reader
 {
-    private static String query;
+    public static String QUERY = "insert into movie_genre (movie_id, genre) values (?, ?)";
 
     public ReaderGenre(String file)
     {
         super(file);
-        this.query = "insert into movie_genre (movie_id, genre) values (?, ?)";
-    }
-
-    public String getQuery()
-    {
-        return this.query;
     }
 
     public String[][] getItemsToInsert()

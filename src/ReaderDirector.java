@@ -1,16 +1,10 @@
 public class ReaderDirector extends Reader
 {
-    private static String query;
+    public static String QUERY = "insert into movie_director (movie_id, director_id, director_name) values (?, ?, ?)";
 
     public ReaderDirector(String file)
     {
         super(file);
-        this.query = "insert into movie_director (movie_id, director_id, director_name) values (?, ?, ?)";
-    }
-
-    public String getQuery()
-    {
-        return this.query;
     }
 
     public String[][] getItemsToInsert()

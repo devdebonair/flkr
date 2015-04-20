@@ -1,16 +1,10 @@
 public class ReaderTag extends Reader
 {
-    private static String query;
+    private static String QUERY = "insert into movie_tag (movie_id, tag_id, tag_weight) values (?, ?, ?)";
 
     public ReaderTag(String file)
     {
         super(file);
-        this.query = "insert into movie_tag (movie_id, tag_id, tag_weight) values (?, ?, ?)";
-    }
-
-    public String getQuery()
-    {
-        return this.query;
     }
 
     public String[][] getItemsToInsert()

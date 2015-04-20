@@ -1,18 +1,12 @@
 public class ReaderTagItem extends Reader
 {
-    private static String query;
+    public static String QUERY  = "insert into tag (id, tag_name) values (?, ?)";
 
     public ReaderTagItem(String file)
     {
         super(file);
-        this.query = "insert into tag (id, tag_name) values (?, ?)";
     }
-
-    public String getQuery()
-    {
-        return this.query;
-    }
-
+    
     public String[][] getItemsToInsert()
     {
         String[][] insertItems = new String[this.lines.size()][2];

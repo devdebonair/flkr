@@ -50,7 +50,6 @@ public abstract class Reader
             System.exit(1);
         }
     }
-
-    public abstract String getQuery();
+    
     public abstract String[][] getItemsToInsert();
 }
