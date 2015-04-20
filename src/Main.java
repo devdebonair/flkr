@@ -5,6 +5,7 @@ import java.util.Map;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.regex.Matcher;
 
 public class Main
 {
@@ -103,13 +104,20 @@ public class Main
         if(isWritingFile)
         {
             createSqlFile(movies, "movie", queries[0]);
-            createSqlFile(movies, "movie_actor", queries[1]);
-            createSqlFile(movies, "movie_director", queries[2]);
-            createSqlFile(movies, "movie_genre", queries[3]);
-            createSqlFile(movies, "movie_tag", queries[4]);
-            createSqlFile(movies, "tag", queries[5]);
-            createSqlFile(movies, "actor", "insert into actor (id, actor_name) values (?,?)");
-            createSqlFile(movies, "director", "insert into director (id, director_name) values (?,?)");
+            createSqlFile(actors, "movie_actor", queries[1]);
+            createSqlFile(directors, "movie_director", queries[2]);
+            createSqlFile(genres, "movie_genre", queries[3]);
+            createSqlFile(tags, "movie_tag", queries[4]);
+            createSqlFile(tagItems, "tag", queries[5]);
+            createSqlFile(actors_single, "actor", "insert into actor (id, actor_name) values (?,?)");
+            createSqlFile(directors_single, "director", "insert into director (id, director_name) values (?,?)");
+            System.out.println("Would you like to insert data files into database. This may take a while. (yes/no)");
+            answer = scan.next();
+            if(answer.equals("no"))
+            {
+                System.out.println("Ending program.");
+                System.exit(1);
+            }
         }
         // get username and password
         // System.out.println("Have you set a password for mysql? (yes/no)");
@@ -194,7 +202,7 @@ public class Main
                 String temp_QUERY = QUERY;
                 for(int j = 0; j < table[i].length; j++)
                 {
-                    temp_QUERY = temp_QUERY.replaceFirst("\\?", table[i][j]);
+                    temp_QUERY = temp_QUERY.replaceFirst("\\?", "'" + Matcher.quoteReplacement(table[i][j].replaceAll("'","\\\\'")) + "'").replaceAll("'\\\\N'", "null");
                 }
                 try
                 {
