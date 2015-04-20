@@ -278,10 +278,34 @@ public class Database
         }
     }
 
-    public String getGenre(int limit)
+    public LinkedList<HashMap<String,String>> getGenre(String genre, int limit)
     {
-        return null;
-     }
+        try
+        {
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie AS m, movie_genre AS g WHERE g.genre = '" + genre + "' AND m.id = g.movie_id ORDER BY rt_audience_score DESC LIMIT 0, " + limit;
+            Statement statement = this.connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
+            HashMap<String, String> map;
+            while(result.next())
+            {
+                map = new HashMap<String, String>();
+                map.put("title_english", result.getString(1));
+                map.put("title_spanish", result.getString(2));
+                map.put("rt_audience_score", result.getString(3));
+                map.put("year", result.getString(4));
+                map.put("image_url_rt", result.getString(5));
+                map.put("image_url_imdb", result.getString(6));
+                listOfResults.add(map);
+            }
+            return listOfResults;
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return null;
+        }
+    }
 
     public String getDirector(int limit)
     {

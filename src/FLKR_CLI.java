@@ -76,7 +76,18 @@ public class FLKR_CLI
                                 System.out.println();
                             }
                             break;
-                case 3:     //System.out.printf("%s\n\n", db.getGenre());
+                case 3:     
+                            System.out.println("Enter a genre.");
+                            String genre = scan.nextLine();
+                            result = db.getGenre(genre, 20);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));   
+                                }
+                                System.out.println();
+                            }
                             break;
                 case 4:     //System.out.printf("%s\n\n", db.getDirector());
                             break;
