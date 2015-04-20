@@ -1,6 +1,6 @@
 import java.sql.*;
 import java.util.HashMap;
-
+import java.util.LinkedList;
 public class Database
 {
     private Connection connection;
@@ -222,16 +222,25 @@ public class Database
     }
 
     //Queries
-    public String getTopMovies(int limit)
+    public LinkedList<HashMap> getTopMovies(int limit)
     {
-        return null;
+        String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb ORDER BY rt_audience_score DESC LIMIT 0, 20";
+        Statement statement = this.connection.createStatement();
+        ResultSet result = statement.executeQuery(query);
+        LinkedList<HashMap> listOfResults = new LinkedList<HashMap>();
+        while(result.next())
+        {
+
+        }
+        HashMap<String, String> map = new HashMap<String, String>();
+
     }
 
-    public HashMap<String,String> getMovie(String title, int limit)
+    public LinkedList<> getMovie(String title, int limit)
     {
         try
         {
-            String query = "SELECT title, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title LIKE " + title;
+            String query = "SELECT title_english, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title LIKE " + title;
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             HashMap<String, String> map = new HashMap<String, String>();
