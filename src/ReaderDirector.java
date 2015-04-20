@@ -1,6 +1,6 @@
 public class ReaderDirector extends Reader
 {
-    public static String QUERY = "insert into movie_director (movie_id, director_id, director_name) values (?, ?, ?)";
+    public static final String QUERY = "insert into movie_director (movie_id, director_id, director_name) values (?, ?, ?)";
 
     public ReaderDirector(String file)
     {

@@ -18,36 +18,44 @@ public class Main
         String[][] tags;
         String[][] tagItems;
         String[] queries = new String[6];
+        boolean isWritingFile = false;
+
+        System.out.println("Would you like to create Sql files? (yes/no)");
+        String answer = scan.next();
+        if(answer.equals("yes"))
+        {
+            isWritingFile = true;
+        }
 
         System.out.println("Parsing movies.dat");
         Reader reader = new ReaderMovie("../dataset/movies.dat");
         movies = reader.getItemsToInsert();
-        queries[0] = reader.getQuery();
+        queries[0] = ((ReaderMovie) reader).QUERY;
 
         System.out.println("Parsing movie_actors.dat");
         reader = new ReaderActor("../dataset/movie_actors.dat");
         actors = reader.getItemsToInsert();
-        queries[1] = reader.getQuery();
+        queries[1] = ((ReaderActor) reader).QUERY;
 
         System.out.println("Parsing movie_directors.dat");
         reader = new ReaderDirector("../dataset/movie_directors.dat");
         directors = reader.getItemsToInsert();
-        queries[2] = reader.getQuery();
+        queries[2] = ((ReaderDirector) reader).QUERY;
 
         System.out.println("Parsing movie_genres.dat");
         reader = new ReaderGenre("../dataset/movie_genres.dat");
         genres = reader.getItemsToInsert();
-        queries[3] = reader.getQuery();
+        queries[3] = ((ReaderGenre) reader).QUERY;
 
         System.out.println("Parsing movie_tags.dat");
         reader = new ReaderTag("../dataset/movie_tags.dat");
         tags = reader.getItemsToInsert();
-        queries[4] = reader.getQuery();
+        queries[4] = ((ReaderTag) reader).QUERY;
 
         System.out.println("Parsing tags.dat");
         reader = new ReaderTagItem("../dataset/tags.dat");
         tagItems = reader.getItemsToInsert();
-        queries[5] = reader.getQuery();
+        queries[5] = ((ReaderTagItem) reader).QUERY;
 
         // find unique actors
         System.out.println("Filtering unique actors");
@@ -91,7 +99,18 @@ public class Main
             directors_single[index][1] = map.get(key);
             index++;
         }
-        createSqlFile(tagItems, "", "", reader.getQuery());
+
+        if(isWritingFile)
+        {
+            createSqlFile(movies, "movie", queries[0]);
+            createSqlFile(movies, "movie_actor", queries[1]);
+            createSqlFile(movies, "movie_director", queries[2]);
+            createSqlFile(movies, "movie_genre", queries[3]);
+            createSqlFile(movies, "movie_tag", queries[4]);
+            createSqlFile(movies, "tag", queries[5]);
+            createSqlFile(movies, "actor", "insert into actor (id, actor_name) values (?,?)");
+            createSqlFile(movies, "director", "insert into director (id, director_name) values (?,?)");
+        }
         // get username and password
         // System.out.println("Have you set a password for mysql? (yes/no)");
         // String username = null;
@@ -137,43 +156,64 @@ public class Main
         // System.out.println("Database has been set up.");
     }
 
-    private static boolean createSqlFile(String[][] table, String filename, String query)
+    private static boolean createSqlFile(String[][] table, String filename, String QUERY)
     {
         File sql_directory = new File("../sql");
         if(!sql_directory.exists())
         {
-            if(file.mkdir())
+            if(sql_directory.mkdir())
             {
                 System.out.println("Sql Directory Created.");
             }
             else
             {
                 System.out.println("Could not create sql directory.");
+                return false;
             }
         }
 
         File sql_file = new File("../sql/" + filename + ".sql");
-        file.createNewFile();
-        FileWrter fileWriter = new FileWriter(sql_file);
-        BufferedWriter writer = new BufferedWriter(fileWriter);
-        for(int i = 0; i < table.length; i++)
+        try
         {
-            String temp_query = query;
-            for(int j = 0; j < table[i].length; j++)
-            {
-                temp_query = temp_query.replaceFirst("\\?", table[i][j]);
-            }
-            try
-            {
-                writer.write(temp_query);
-                writer.newLine();
-            }
-            catch(Exception e)
-            {
-                System.out.println("Did not write:\t" + temp_query);
-            }
+            System.out.println("Creating " + filename + ".sql");
+            sql_file.createNewFile();
         }
-        write.close();
-        return false;
+        catch(Exception e)
+        {
+            System.out.println("Could not create " + filename + ".sql");
+            return false;
+        }
+
+        try
+        {
+            FileWriter fileWriter = new FileWriter(sql_file);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+            System.out.println("Writing to " + filename + ".sql");
+            for(int i = 0; i < table.length; i++)
+            {
+                String temp_QUERY = QUERY;
+                for(int j = 0; j < table[i].length; j++)
+                {
+                    temp_QUERY = temp_QUERY.replaceFirst("\\?", table[i][j]);
+                }
+                try
+                {
+                    writer.write(temp_QUERY);
+                    writer.newLine();
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Did not write:\t" + temp_QUERY);
+                }
+            }
+            writer.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+            return false;
+        }
+        System.out.println("Finished writing to "  + filename + ".sql");
+        return true;
     }
 }

@@ -7,6 +7,7 @@ public class Database
     private String username;
     private String password;
     private String database;
+    public String QUERY;
 
     public Database()
     {
@@ -53,7 +54,7 @@ public class Database
     }
 
     //If database does not exist, create new one called flkr
-    private void createDatabase()
+    public void createDatabase()
     {
         try
         {
@@ -79,7 +80,7 @@ public class Database
         }
     }
 
-    private void createSchemas()
+    public void createSchemas()
     {
         try
         {

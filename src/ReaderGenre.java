@@ -1,6 +1,6 @@
 public class ReaderGenre extends Reader
 {
-    public static String QUERY = "insert into movie_genre (movie_id, genre) values (?, ?)";
+    public static final String QUERY = "insert into movie_genre (movie_id, genre) values (?, ?)";
 
     public ReaderGenre(String file)
     {

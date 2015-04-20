@@ -1,6 +1,6 @@
 public class ReaderTagItem extends Reader
 {
-    public static String QUERY  = "insert into tag (id, tag_name) values (?, ?)";
+    public static final String QUERY  = "insert into tag (id, tag_name) values (?, ?)";
 
     public ReaderTagItem(String file)
     {

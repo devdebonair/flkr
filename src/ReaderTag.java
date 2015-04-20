@@ -1,6 +1,6 @@
 public class ReaderTag extends Reader
 {
-    private static String QUERY = "insert into movie_tag (movie_id, tag_id, tag_weight) values (?, ?, ?)";
+    public static final String QUERY = "insert into movie_tag (movie_id, tag_id, tag_weight) values (?, ?, ?)";
 
     public ReaderTag(String file)
     {

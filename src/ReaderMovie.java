@@ -1,6 +1,6 @@
 public class ReaderMovie extends Reader
 {
-    public static String QUERY  = "INSERT INTO movie (id, title_english, title_spanish, image_url_imdb, year, rt_critic_rating, rt_critic_num_reviews, rt_critic_num_fresh, rt_critic_num_rotten, rt_critic_score, rt_critic_top_rating, rt_critic_top_num_reviews, rt_critic_top_num_fresh, rt_critic_top_num_rotten, rt_critic_top_score, rt_audience_rating, rt_audience_num_rating, rt_audience_score, image_url_rt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String QUERY = "INSERT INTO movie (id, title_english, title_spanish, image_url_imdb, year, rt_critic_rating, rt_critic_num_reviews, rt_critic_num_fresh, rt_critic_num_rotten, rt_critic_score, rt_critic_top_rating, rt_critic_top_num_reviews, rt_critic_top_num_fresh, rt_critic_top_num_rotten, rt_critic_top_score, rt_audience_rating, rt_audience_num_rating, rt_audience_score, image_url_rt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     public ReaderMovie(String file)
     {
