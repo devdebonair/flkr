@@ -33,7 +33,7 @@ public class Database
         catch(Exception e)
         {
             System.err.println(e);
-            System.out.println("flkr database does not exist.");
+            System.out.println(this.database + " database does not exist.");
             if(!isStrict)
             {
                 createDatabase();
@@ -223,21 +223,36 @@ public class Database
     }
 
     //Queries
-    public LinkedList<HashMap> getTopMovies(int limit)
+    public LinkedList<HashMap<String,String>> getTopMovies(int limit)
     {
-        // String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb ORDER BY rt_audience_score DESC LIMIT 0, 20";
-        // Statement statement = this.connection.createStatement();
-        // ResultSet result = statement.executeQuery(query);
-        // LinkedList<HashMap> listOfResults = new LinkedList<HashMap>();
-        // while(result.next())
-        // {
-
-        // }
-        // HashMap<String, String> map = new HashMap<String, String>();
-        return null;
+        try
+        {        
+            String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb FROM movie ORDER BY rt_audience_score DESC LIMIT 0, " + limit;
+            Statement statement = this.connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
+            HashMap<String, String> map;
+            while(result.next())
+            {
+                map = new HashMap<String, String>();
+                map.put("title_english", result.getString(1));
+                map.put("title_spanish", result.getString(2));
+                map.put("rt_audience_score", result.getString(3));
+                map.put("year", result.getString(4));
+                map.put("image_url_rt", result.getString(5));
+                map.put("image_url_imdb", result.getString(6));
+                listOfResults.add(map);
+            }
+            return listOfResults;
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return null;
+        }
     }
 
-    public LinkedList<HashMap> getMovie(String title, int limit)
+    public LinkedList<HashMap<String,String>> getMovie(String title, int limit)
     {
         try
         {
@@ -250,7 +265,7 @@ public class Database
             map.put("rt_audience_score", result.getString(3));
             map.put("image_url_rt", result.getString(4));
             map.put("image_url_imdb", result.getString(5));
-            LinkedList<HashMap> listOfResults = new LinkedList<HashMap>();
+            LinkedList<HashMap<String,String>> listOfResults = new LinkedList<HashMap<String,String>>();
             listOfResults.add(map);
             return listOfResults;
         }

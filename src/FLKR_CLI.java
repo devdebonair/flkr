@@ -1,11 +1,37 @@
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class FLKR_CLI
 {
     public static void main(String[] args)
     {
         Scanner scan = new Scanner(System.in);
-        Database db = new Database();
+        String username = null;
+        String password = null;
+        String databaseName;
+
+        System.out.println("What is the name of the database you would like to connect to?");
+        databaseName = scan.next();
+        System.out.println("Do you set a username and password for " + databaseName + "? (yes/no)");
+        String answer = scan.next();
+        if(answer.equals("yes"))
+        {
+            System.out.println("What is your username?");
+            username = scan.next();
+            System.out.println("What is your password?");
+            password = scan.next();
+        }
+        Database db;
+        if(username == null || password == null)
+        {
+            System.out.println("swagger swaggington");
+            db = new Database();
+        }
+        else
+        {
+            db = new Database(username, password, databaseName, true);
+        }
 
         while(true)
         {
@@ -20,12 +46,21 @@ public class FLKR_CLI
             System.out.println("[8] Top 20 Directors");
             System.out.println("[0] Exit");
 
-            int command = null;
+            int command = 99;
             command = scan.nextInt();
 
             switch(command)
             {
-                case 1:     //System.out.printf("%s\n\n", db.getTopMovies());
+                case 1:     
+                            LinkedList<HashMap<String,String>> result = db.getTopMovies(20);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));
+                                }
+                                System.out.println();
+                            }
                             break;
                 case 2:     //System.out.printf("%s\n\n", db.getMovie());
                             break;
