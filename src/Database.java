@@ -256,9 +256,11 @@ public class Database
     {
         try
         {
-            String query = "SELECT title_english, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title LIKE " + title;
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title_english = '" + title + "' LIMIT 0, " + limit;
+            System.out.println(query);
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
+            result.next();
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("title", result.getString(1));
             map.put("year", result.getString(2));

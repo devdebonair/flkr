@@ -13,7 +13,7 @@ public class FLKR_CLI
 
         System.out.println("What is the name of the database you would like to connect to?");
         databaseName = scan.next();
-        System.out.println("Do you set a username and password for " + databaseName + "? (yes/no)");
+        System.out.println("Did you set a username and password for " + databaseName + "? (yes/no)");
         String answer = scan.next();
         if(answer.equals("yes"))
         {
@@ -25,7 +25,6 @@ public class FLKR_CLI
         Database db;
         if(username == null || password == null)
         {
-            System.out.println("swagger swaggington");
             db = new Database();
         }
         else
@@ -33,9 +32,9 @@ public class FLKR_CLI
             db = new Database(username, password, databaseName, true);
         }
 
+        System.out.println("\n\nWelcome to FLKR.");
         while(true)
         {
-            System.out.println("Welcome to FLKR.");
             System.out.println("[1] Top Popular Movies");
             System.out.println("[2] Search by Title");
             System.out.println("[3] Search by Genre");
@@ -48,11 +47,13 @@ public class FLKR_CLI
 
             int command = 99;
             command = scan.nextInt();
+            scan.nextLine();
 
+            LinkedList<HashMap<String,String>> result;
             switch(command)
             {
                 case 1:     
-                            LinkedList<HashMap<String,String>> result = db.getTopMovies(20);
+                            result = db.getTopMovies(20);
                             for(HashMap<String,String> map : result)
                             {
                                 for(String key : map.keySet())
@@ -62,7 +63,18 @@ public class FLKR_CLI
                                 System.out.println();
                             }
                             break;
-                case 2:     //System.out.printf("%s\n\n", db.getMovie());
+                case 2:     
+                            System.out.println("Enter a movie title.");
+                            String title = scan.nextLine();
+                            result = db.getMovie(title, 1);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));   
+                                }
+                                System.out.println();
+                            }
                             break;
                 case 3:     //System.out.printf("%s\n\n", db.getGenre());
                             break;
@@ -77,10 +89,11 @@ public class FLKR_CLI
                 case 8:     //System.out.printf("%s\n\n", db.getTopActors());
                             break;
                 case 0:     System.out.println("Exiting...");
-                            break;
+                            System.exit(0);
                 default:    System.out.println("Not a valid number.");
                             continue;
             }
+            System.out.printf("\n\n\n");
         }
     }
 }
