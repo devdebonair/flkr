@@ -89,7 +89,18 @@ public class FLKR_CLI
                                 System.out.println();
                             }
                             break;
-                case 4:     //System.out.printf("%s\n\n", db.getDirector());
+                case 4:     
+                            System.out.println("Enter a director name.");
+                            String directorName = scan.nextLine();
+                            result = db.getDirector(directorName);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));   
+                                }
+                                System.out.println();
+                            }
                             break;
                 case 5:     //System.out.printf("%s\n\n", db.getActor());
                             break;
