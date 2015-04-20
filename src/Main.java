@@ -128,7 +128,6 @@ public class Main
             System.out.println("What is the name of the database that you would like to connect to or create?");
             database_name = scan.next();
         }
-        scan.close();
 
         // create instance of database
         Database db;
@@ -148,7 +147,7 @@ public class Main
             System.out.println("Ending program.");
             System.exit(0);
         }
-        
+
         System.out.println("Inserting into movie table...");
         db.executeBatch(queries[0], movies, 2000);
         System.out.println("Inserting into actor table...");
