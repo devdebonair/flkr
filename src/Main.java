@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Main
 {
@@ -88,49 +91,89 @@ public class Main
             directors_single[index][1] = map.get(key);
             index++;
         }
-
+        createSqlFile(tagItems, "", "", reader.getQuery());
         // get username and password
-        System.out.println("Have you set a password for mysql? (yes/no)");
-        String username = null;
-        String password = null;
-        String database_name = null;
-        if(scan.next().equals("yes"))
-        {
-            System.out.println("What is your username?");
-            username = scan.next();
-            System.out.println("What is your password?");
-            password = scan.next();
-            System.out.println("What is the name of the database that you would like to connect to or create?");
-            database_name = scan.next();
-        }
-        scan.close();
+        // System.out.println("Have you set a password for mysql? (yes/no)");
+        // String username = null;
+        // String password = null;
+        // String database_name = null;
+        // if(scan.next().equals("yes"))
+        // {
+        //     System.out.println("What is your username?");
+        //     username = scan.next();
+        //     System.out.println("What is your password?");
+        //     password = scan.next();
+        //     System.out.println("What is the name of the database that you would like to connect to or create?");
+        //     database_name = scan.next();
+        // }
+        // scan.close();
 
-        // create instance of database
-        Database db;
-        if(username != null && password != null && database_name != null)
+        // // create instance of database
+        // Database db;
+        // if(username != null && password != null && database_name != null)
+        // {
+        //     db = new Database(username, password, database_name);
+        // }
+        // else
+        // {
+        //     db = new Database();
+        // }
+        // System.out.println("Inserting into movie table...");
+        // db.executeBatch(queries[0], movies, 2000);
+        // System.out.println("Inserting into actor table...");
+        // db.executeBatch("insert into actor (id, actor_name) values (?,?)", actors_single, 2000);
+        // System.out.println("Inserting into director table...");
+        // db.executeBatch("insert into director (id, director_name) values (?,?)", directors_single, 2000);
+        // System.out.println("Inserting into tag table...");
+        // db.executeBatch(queries[5], tagItems, 1000);
+        // System.out.println("Inserting into movie_actor table...");
+        // db.executeBatch(queries[1], actors, 2000);
+        // System.out.println("Inserting into movie_director table...");
+        // db.executeBatch(queries[2], directors, 2000);
+        // System.out.println("Inserting into movie_genres table...");
+        // db.executeBatch(queries[3], genres, 2000);
+        // System.out.println("Inserting into movie_tags table...");
+        // db.executeBatch(queries[4], tags, 2000);
+        // System.out.println("Database has been set up.");
+    }
+
+    private static boolean createSqlFile(String[][] table, String filename, String query)
+    {
+        File sql_directory = new File("../sql");
+        if(!sql_directory.exists())
         {
-            db = new Database(username, password, database_name);
+            if(file.mkdir())
+            {
+                System.out.println("Sql Directory Created.");
+            }
+            else
+            {
+                System.out.println("Could not create sql directory.");
+            }
         }
-        else
+
+        File sql_file = new File("../sql/" + filename + ".sql");
+        file.createNewFile();
+        FileWrter fileWriter = new FileWriter(sql_file);
+        BufferedWriter writer = new BufferedWriter(fileWriter);
+        for(int i = 0; i < table.length; i++)
         {
-            db = new Database();
+            String temp_query = query;
+            for(int j = 0; j < table[i].length; j++)
+            {
+                temp_query = temp_query.replaceFirst("\\?", table[i][j]);
+            }
+            try
+            {
+                writer.write(temp_query);
+                writer.newLine();
+            }
+            catch(Exception e)
+            {
+                System.out.println("Did not write:\t" + temp_query);
+            }
         }
-        System.out.println("Inserting into movie table...");
-        db.executeBatch(queries[0], movies, 2000);
-        System.out.println("Inserting into actor table...");
-        db.executeBatch("insert into actor (id, actor_name) values (?,?)", actors_single, 2000);
-        System.out.println("Inserting into director table...");
-        db.executeBatch("insert into director (id, director_name) values (?,?)", directors_single, 2000);
-        System.out.println("Inserting into tag table...");
-        db.executeBatch(queries[5], tagItems, 1000);
-        System.out.println("Inserting into movie_actor table...");
-        db.executeBatch(queries[1], actors, 2000);
-        System.out.println("Inserting into movie_director table...");
-        db.executeBatch(queries[2], directors, 2000);
-        System.out.println("Inserting into movie_genres table...");
-        db.executeBatch(queries[3], genres, 2000);
-        System.out.println("Inserting into movie_tags table...");
-        db.executeBatch(queries[4], tags, 2000);
-        System.out.println("Database has been set up.");
+        write.close();
+        return false;
     }
 }
