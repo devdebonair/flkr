@@ -9,7 +9,7 @@ public class FLKR_CLI
         Scanner scan = new Scanner(System.in);
         String username = null;
         String password = null;
-        String databaseName;
+        String databaseName = null;
 
         System.out.println("What is the name of the database you would like to connect to?");
         databaseName = scan.next();
@@ -128,9 +128,27 @@ public class FLKR_CLI
                                 System.out.println();
                             }
                             break;
-                case 7:     //System.out.printf("%s\n\n", db.getTopDirectors());
+                case 7:     
+                            result = db.getTopDirectors(20);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));
+                                }
+                                System.out.println();
+                            }
                             break;
-                case 8:     //System.out.printf("%s\n\n", db.getTopActors());
+                case 8:     
+                            result = db.getTopActors(20);
+                            for(HashMap<String,String> map : result)
+                            {
+                                for(String key : map.keySet())
+                                {
+                                    System.out.printf("%s\t\t", map.get(key));
+                                }
+                                System.out.println();
+                            }
                             break;
                 case 0:     System.out.println("Exiting...");
                             System.exit(0);

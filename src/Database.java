@@ -394,13 +394,53 @@ public class Database
         }
     }
 
-    public String getTopDirectors(int limit)
+    public LinkedList<HashMap<String,String>> getTopDirectors(int limit)
     {
-        return null;
+        try
+        {
+            String query = "SELECT md.director_name, avg(m.rt_audience_score) FROM movie_director AS md, movie AS m WHERE md.movie_id = m.id  group by md.director_name HAVING avg(rt_audience_score) > (select avg(rt_audience_score) from movie) order by count(*) desc limit 20";
+            Statement statement = this.connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
+            HashMap<String, String> map;
+            while(result.next())
+            {
+                map = new HashMap<String, String>();
+                map.put("director_name", result.getString(1));
+                map.put("avg(m.rt_audience_score)", result.getString(2));
+                listOfResults.add(map);
+            }
+            return listOfResults;
+        }   
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return null;
+        }
     }
 
-    public String getTopActors(int limit)
+    public LinkedList<HashMap<String,String>> getTopActors(int limit)
     {
-        return null;
+        try
+        {
+            String query = "SELECT ma.actor_name, avg(m.rt_audience_score) FROM movie_actor AS ma, movie AS m WHERE ma.movie_id = m.id group by ma.actor_name HAVING avg(rt_audience_score) > (select avg(rt_audience_score) from movie) order by count(*) desc limit 0,20";
+            Statement statement = this.connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
+            HashMap<String, String> map;
+            while(result.next())
+            {
+                map = new HashMap<String, String>();
+                map.put("director_name", result.getString(1));
+                map.put("avg(m.rt_audience_score)", result.getString(2));
+                listOfResults.add(map);
+            }
+            return listOfResults;
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+            return null;
+        }
     }
 }
