@@ -42,7 +42,7 @@ public class FLKR_CLI
             System.out.println("[5] Search by Actor");
             System.out.println("[6] Search by Tag");
             System.out.println("[7] Top 20 Directors");
-            System.out.println("[8] Top 20 Directors");
+            System.out.println("[8] Top 20 Actors");
             System.out.println("[0] Exit");
 
             int command = 99;
