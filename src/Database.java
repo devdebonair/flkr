@@ -33,7 +33,7 @@ public class Database
         catch(Exception e)
         {
             System.err.println(e);
-            System.out.println(this.database + " database does not exist.");
+            //System.out.println(this.database + " database does not exist.");
             if(!isStrict)
             {
                 createDatabase();
@@ -46,7 +46,7 @@ public class Database
                 catch(Exception ex)
                 {
                     System.err.println(ex);
-                    System.out.println("Make sure MySql Server is on and running on port 3306.");
+                    //System.out.println("Make sure MySql Server is on and running on port 3306.");
                     System.exit(1);
                 }
             }
@@ -58,14 +58,14 @@ public class Database
     {
         try
         {
-            System.out.println("Connecting to mysql.....");
+            //System.out.println("Connecting to mysql.....");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/", this.username, this.password);
             String sql = "CREATE DATABASE " + this.database;
             Statement createDBStatement = connection.createStatement();
-            System.out.println("Creating " + this.database + " database.....");
+            //System.out.println("Creating " + this.database + " database.....");
             createDBStatement.executeUpdate(sql);
-            System.out.println(this.database + " database created.....");
+            //System.out.println(this.database + " database created.....");
             // System.out.println("Closing connection.....");
             // this.connection.close();
         }
@@ -84,7 +84,7 @@ public class Database
     {
         try
         {
-            System.out.println("Connecting to " + this.database + ".....");
+            //System.out.println("Connecting to " + this.database + ".....");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/flkr", this.username, this.password);
             Statement createSchemaStatement = connection.createStatement();
@@ -155,21 +155,21 @@ public class Database
                                         "FOREIGN KEY (movie_id) REFERENCES movie(id))";
             
             //create database tables
-            System.out.println("Creating movie Table....");
+            //System.out.println("Creating movie Table....");
             createSchemaStatement.executeUpdate(sqlTableMovie);
-            System.out.println("Creating actor Table....");
+            //System.out.println("Creating actor Table....");
             createSchemaStatement.executeUpdate(sqlTableActor);
-            System.out.println("Creating director Table....");
+            //System.out.println("Creating director Table....");
             createSchemaStatement.executeUpdate(sqlTableDirector);
-            System.out.println("Creating tag Table....");
+            //System.out.println("Creating tag Table....");
             createSchemaStatement.executeUpdate(sqlTableTag);
-            System.out.println("Creating movie_tag Table....");
+            //System.out.println("Creating movie_tag Table....");
             createSchemaStatement.executeUpdate(sqlTableMovieTag);
-            System.out.println("Creating movie_actor Table....");
+            //System.out.println("Creating movie_actor Table....");
             createSchemaStatement.executeUpdate(sqlTableMovieActor);
-            System.out.println("Creating movie_director Table....");
+            //System.out.println("Creating movie_director Table....");
             createSchemaStatement.executeUpdate(sqlTableMovieDirector);
-            System.out.println("Creating movie_genre Table....");
+            //System.out.println("Creating movie_genre Table....");
             createSchemaStatement.executeUpdate(sqlTableGenre);
         }
         catch(Exception e)
@@ -257,7 +257,7 @@ public class Database
         try
         {
             String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title_english = '" + title + "' LIMIT 0, " + limit;
-            System.out.println(query);
+            //System.out.println(query);
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             result.next();
