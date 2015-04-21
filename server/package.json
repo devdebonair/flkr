@@ -1,0 +1,17 @@
+{
+  "name": "flkr",
+  "version": "1.0.0",
+  "description": "Project for Database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+  	"express": "*",
+  	"jade": "*",
+    "method-override": "*",
+    "body-parser": "*"
+  },
+  "author": "Vincent Moore",
+  "license": "ISC"
+}
