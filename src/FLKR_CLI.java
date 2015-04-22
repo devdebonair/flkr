@@ -118,7 +118,7 @@ public class FLKR_CLI
                 case 6:     
                             System.out.println("Enter a tag.");
                             String tagName = scan.nextLine();
-                            result = db.getActor(tagName);
+                            result = db.getTag(tagName);
                             for(HashMap<String,String> map : result)
                             {
                                 for(String key : map.keySet())

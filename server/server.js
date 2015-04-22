@@ -6,7 +6,7 @@ var methodOverride = require('method-override');
 var FLKR = require('./java-bridge');
 var db = new FLKR();
 
-app.use(express.static(__dirname + '/public'));
+app.use( '/lib', express.static(__dirname + '/public/static') );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride());
@@ -61,6 +61,9 @@ app.get('/api/top_actors', function(req, res){
 	});
 });
 
+app.get('/', function(req, res){
+	res.render('../views/home');
+});
 http.listen(process.env.PORT, function(){
 	console.log("Server running at port %s", process.env.PORT);
 });
