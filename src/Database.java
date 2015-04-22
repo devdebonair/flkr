@@ -257,20 +257,23 @@ public class Database
     {
         try
         {
-            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie WHERE title_english = '" + title + "' LIMIT 0, " + limit;
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie WHERE title_english LIKE '%" + title + "%' LIMIT " + limit;
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
-            result.next();
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("title_english", result.getString(1));
-            map.put("title_spanish", result.getString(2));
-            map.put("year", result.getString(3));
-            map.put("rt_audience_score", result.getString(4));
-            map.put("image_url_rt", result.getString(5));
-            map.put("image_url_imdb", result.getString(6));
-            map.put("rt_critic_score", result.getString(7));
             LinkedList<HashMap<String,String>> listOfResults = new LinkedList<HashMap<String,String>>();
-            listOfResults.add(map);
+            HashMap<String, String> map;
+            while(result.next())
+            {
+                map = new HashMap<String, String>();
+                map.put("title_english", result.getString(1));
+                map.put("title_spanish", result.getString(2));
+                map.put("year", result.getString(3));
+                map.put("rt_audience_score", result.getString(4));
+                map.put("image_url_rt", result.getString(5));
+                map.put("image_url_imdb", result.getString(6));
+                map.put("rt_critic_score", result.getString(7));
+                listOfResults.add(map);
+            }
             return listOfResults;
         }
         catch(Exception e)

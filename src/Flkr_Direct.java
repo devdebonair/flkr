@@ -16,7 +16,7 @@ public class Flkr_Direct
 		}
 		if(args[0].equals("get_movie"))
 		{
-			List retval = db.getMovie(args[1].replaceAll("_"," "), 1);
+			List retval = db.getMovie(args[1].replaceAll("_"," "), 20);
 			String jsonString = JSONValue.toJSONString(retval);
 			System.out.print(jsonString);
 		}
