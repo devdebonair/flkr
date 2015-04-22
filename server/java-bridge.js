@@ -80,6 +80,7 @@ JavaBridge.prototype =
 			catch(e)
 			{
 				console.log(e);
+				console.log('error parsing data for ' + actor);
 				return;
 			}
 			callback(data);

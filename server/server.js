@@ -20,31 +20,31 @@ app.get('/api/top_movies', function(req, res){
 });
 
 app.get('/api/get_movie', function(req, res){
-	db.getMovie(req.query.name, function(data){
+	db.getMovie(req.query.name.trim().replace(/ /g, '_'), function(data){
 		res.json(data);
 	});
 });
 
 app.get('/api/get_genre', function(req, res){
-	db.getGenre(req.query.name, function(data){
+	db.getGenre(req.query.name.trim().replace(/ /g, '_'), function(data){
 		res.json(data);
 	});
 });
 
 app.get('/api/get_director', function(req, res){
-	db.getDirector(req.query.name, function(data){
+	db.getDirector(req.query.name.trim().replace(/ /g, '_'), function(data){
 		res.json(data);
 	});
 });
 
 app.get('/api/get_actor', function(req, res){
-	db.getActor(req.query.name, function(data){
+	db.getActor(req.query.name.trim().replace(/ /g, '_'), function(data){
 		res.json(data);
 	});
 });
 
 app.get('/api/get_tag', function(req, res){
-	db.getTag(req.query.name, function(data){
+	db.getTag(req.query.name.trim().replace(/ /g, '_'), function(data){
 		res.json(data);
 	});
 });

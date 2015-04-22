@@ -227,7 +227,7 @@ public class Database
     {
         try
         {        
-            String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb FROM movie ORDER BY rt_audience_score DESC LIMIT 0, " + limit;
+            String query = "SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb, rt_critic_score FROM movie ORDER BY rt_audience_score DESC LIMIT 0, " + limit;
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
@@ -241,6 +241,7 @@ public class Database
                 map.put("year", result.getString(4));
                 map.put("image_url_rt", result.getString(5));
                 map.put("image_url_imdb", result.getString(6));
+                map.put("rt_critic_score", result.getString(7));
                 listOfResults.add(map);
             }
             return listOfResults;
@@ -256,7 +257,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie WHERE title_english = '" + title + "' LIMIT 0, " + limit;
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie WHERE title_english = '" + title + "' LIMIT 0, " + limit;
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             result.next();
@@ -267,6 +268,7 @@ public class Database
             map.put("rt_audience_score", result.getString(4));
             map.put("image_url_rt", result.getString(5));
             map.put("image_url_imdb", result.getString(6));
+            map.put("rt_critic_score", result.getString(7));
             LinkedList<HashMap<String,String>> listOfResults = new LinkedList<HashMap<String,String>>();
             listOfResults.add(map);
             return listOfResults;
@@ -282,7 +284,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie AS m, movie_genre AS g WHERE g.genre = '" + genre + "' AND m.id = g.movie_id ORDER BY rt_audience_score DESC LIMIT 0, " + limit;
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie AS m, movie_genre AS g WHERE g.genre = '" + genre + "' AND m.id = g.movie_id ORDER BY rt_audience_score DESC LIMIT 0, " + limit;
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
@@ -296,6 +298,7 @@ public class Database
                 map.put("rt_audience_score", result.getString(4));
                 map.put("image_url_rt", result.getString(5));
                 map.put("image_url_imdb", result.getString(6));
+                map.put("rt_critic_score", result.getString(7));
                 listOfResults.add(map);
             }
             return listOfResults;
@@ -311,7 +314,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie AS m, movie_director AS d WHERE d.director_name = '" + directorName + "' AND m.id = d.movie_id";
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie AS m, movie_director AS d WHERE d.director_name = '" + directorName + "' AND m.id = d.movie_id";
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
@@ -325,6 +328,7 @@ public class Database
                 map.put("rt_audience_score", result.getString(4));
                 map.put("image_url_rt", result.getString(5));
                 map.put("image_url_imdb", result.getString(6));
+                map.put("rt_critic_score", result.getString(7));
                 listOfResults.add(map);
             }
             return listOfResults;
@@ -340,7 +344,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb FROM movie AS m, movie_actor AS a WHERE a.actor_name = '" + actorName + "' AND m.id = a.movie_id";
+            String query = "SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie AS m, movie_actor AS a WHERE a.actor_name = '" + actorName + "' AND m.id = a.movie_id";
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
@@ -354,6 +358,7 @@ public class Database
                 map.put("rt_audience_score", result.getString(4));
                 map.put("image_url_rt", result.getString(5));
                 map.put("image_url_imdb", result.getString(6));
+                map.put("rt_critic_score", result.getString(7));
                 listOfResults.add(map);
             }
             return listOfResults;
@@ -369,7 +374,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT m.title_english, m.title_spanish, m.year, m.rt_audience_score, m.image_url_rt, m.image_url_imdb FROM movie AS m, tag AS t, movie_tag AS mt WHERE t.id = mt.tag_id AND m.id = mt.movie_id AND t.tag_name = '" + tagName + "'";
+            String query = "SELECT m.title_english, m.title_spanish, m.year, m.rt_audience_score, m.image_url_rt, m.image_url_imdb, m.rt_critic_score FROM movie AS m, tag AS t, movie_tag AS mt WHERE t.id = mt.tag_id AND m.id = mt.movie_id AND t.tag_name = '" + tagName + "'";
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
@@ -383,6 +388,7 @@ public class Database
                 map.put("rt_audience_score", result.getString(4));
                 map.put("image_url_rt", result.getString(5));
                 map.put("image_url_imdb", result.getString(6));
+                map.put("rt_critic_score", result.getString(7));
                 listOfResults.add(map);
             }
             return listOfResults;
@@ -431,7 +437,7 @@ public class Database
             while(result.next())
             {
                 map = new HashMap<String, String>();
-                map.put("director_name", result.getString(1));
+                map.put("actor_name", result.getString(1));
                 map.put("avg(m.rt_audience_score)", result.getString(2));
                 listOfResults.add(map);
             }
