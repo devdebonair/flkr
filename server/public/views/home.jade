@@ -207,12 +207,12 @@ html
 
 		$('#topDirectors').click(function(){
 			$('#results').empty();
-			$.get('/api/top_actors', function(data){
+			$.get('/api/top_directors', function(data){
 				var toAppend = '';
 				for(var i = 0; i < data.length; i++)
 				{
 					toAppend += '<div class="row">' +
-									'<h1 class="flow-text padding-sm" value="'+ data[i].actor_name +'">'+ (i+1) +'.     '+ data[i].actor_name + '<h1>'+
+									'<h1 class="flow-text padding-sm" value="'+ data[i].director_name +'">'+ (i+1) +'.     '+ data[i].director_name + '<h1>'+
 								'</div>' +
 								'<hr color="#EAEAEA">'
 				}
