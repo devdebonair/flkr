@@ -1,0 +1,75 @@
+Database Schema
+
+CREATE TABLE `movie` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `title_english` varchar(255) DEFAULT NULL,
+  `title_spanish` varchar(255) DEFAULT NULL,
+  `image_url_imdb` varchar(255) DEFAULT NULL,
+  `year` int(11) DEFAULT NULL,
+  `rt_critic_rating` decimal(10,0) DEFAULT NULL,
+  `rt_critic_num_reviews` int(11) DEFAULT NULL,
+  `rt_critic_num_fresh` int(11) DEFAULT NULL,
+  `rt_critic_num_rotten` int(11) DEFAULT NULL,
+  `rt_critic_score` decimal(10,0) DEFAULT NULL,
+  `rt_critic_top_rating` decimal(10,0) DEFAULT NULL,
+  `rt_critic_top_num_reviews` int(11) DEFAULT NULL,
+  `rt_critic_top_num_fresh` int(11) DEFAULT NULL,
+  `rt_critic_top_num_rotten` int(11) DEFAULT NULL,
+  `rt_critic_top_score` decimal(10,0) DEFAULT NULL,
+  `rt_audience_rating` decimal(10,0) DEFAULT NULL,
+  `rt_audience_num_rating` decimal(10,0) DEFAULT NULL,
+  `rt_audience_score` decimal(10,0) DEFAULT NULL,
+  `image_url_rt` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+
+CREATE TABLE `movie_actor` (
+  `movie_id` int(11) DEFAULT NULL,
+  `actor_id` varchar(255) DEFAULT NULL,
+  `actor_name` varchar(255) DEFAULT NULL,
+  `ranking` int(11) DEFAULT NULL,
+  KEY `movie_id` (`movie_id`),
+  KEY `actor_id` (`actor_id`),
+  CONSTRAINT `movie_actor_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
+  CONSTRAINT `movie_actor_ibfk_2` FOREIGN KEY (`actor_id`) REFERENCES `actor` (`id`)
+
+CREATE TABLE `movie_director` (
+  `movie_id` int(11) DEFAULT NULL,
+  `director_id` varchar(255) DEFAULT NULL,
+  `director_name` varchar(255) DEFAULT NULL,
+  KEY `movie_id` (`movie_id`),
+  KEY `director_id` (`director_id`),
+  CONSTRAINT `movie_director_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
+  CONSTRAINT `movie_director_ibfk_2` FOREIGN KEY (`director_id`) REFERENCES `director` (`id`)
+
+CREATE TABLE `movie_genre` (
+  `movie_id` int(11) DEFAULT NULL,
+  `genre` varchar(255) DEFAULT NULL,
+  KEY `movie_id` (`movie_id`),
+  CONSTRAINT `movie_genre_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`)
+
+CREATE TABLE `movie_tag` (
+  `movie_id` int(11) DEFAULT NULL,
+  `tag_id` int(11) DEFAULT NULL,
+  `tag_weight` int(11) DEFAULT NULL,
+  KEY `tag_id` (`tag_id`),
+  KEY `movie_id` (`movie_id`),
+  CONSTRAINT `movie_tag_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`),
+  CONSTRAINT `movie_tag_ibfk_2` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`)
+
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `tag_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+
+CREATE TABLE `actor` (
+  `id` varchar(255) NOT NULL DEFAULT '',
+  `actor_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+
+CREATE TABLE `director` (
+  `id` varchar(255) NOT NULL DEFAULT '',
+  `director_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+
+
+

@@ -1,0 +1,37 @@
+SQL Statements
+
+Query 1
+SELECT title_english, title_spanish, rt_audience_score, year, image_url_rt, image_url_imdb, rt_critic_score FROM movie 
+ORDER BY rt_audience_score DESC LIMIT 20
+
+Query 2
+SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie
+WHERE title_english LIKE '%" + title + "%' LIMIT 20
+
+Query 3
+SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie AS m, movie_genre AS g
+WHERE g.genre = '" + genre + "' AND m.id = g.movie_id ORDER BY rt_audience_score DESC LIMIT 20
+
+
+Query 4
+SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie AS m, movie_director AS d
+WHERE d.director_name = '" + directorName + "' AND m.id = d.movie_id
+
+Query 5
+SELECT title_english, title_spanish, year, rt_audience_score, image_url_rt, image_url_imdb, rt_critic_score FROM movie AS m, movie_actor AS a 
+WHERE a.actor_name = '" + actorName + "' AND m.id = a.movie_id
+
+Query 6
+SELECT m.title_english, m.title_spanish, m.year, m.rt_audience_score, m.image_url_rt, m.image_url_imdb, m.rt_critic_score 
+FROM movie AS m, tag AS t, movie_tag AS mt 
+WHERE t.id = mt.tag_id AND m.id = mt.movie_id AND t.tag_name = '" + tagName + "'"
+
+Query 7
+SELECT distinct md.director_name, avg(m.rt_audience_score)
+FROM movie_director AS md, movie AS m 
+WHERE md.movie_id = m.id  group by md.director_name HAVING count(*)>20 order by avg(m.rt_audience_score) desc, md.director_name limit 20
+
+Query 8
+SELECT distinct ma.actor_name, avg(m.rt_audience_score) 
+FROM movie_actor AS ma, movie AS m 
+WHERE ma.movie_id = m.id group by ma.actor_name HAVING count(*) > 30 order by avg(m.rt_audience_score) desc, ma.actor_name limit 20
