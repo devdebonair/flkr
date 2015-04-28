@@ -407,7 +407,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT md.director_name, avg(m.rt_audience_score) FROM movie_director AS md, movie AS m WHERE md.movie_id = m.id  group by md.director_name HAVING avg(rt_audience_score) > (select avg(rt_audience_score) from movie) order by count(*) desc limit 20";
+            String query = "SELECT distinct md.director_name, avg(m.rt_audience_score) FROM movie_director AS md, movie AS m WHERE md.movie_id = m.id  group by md.director_name HAVING count(*)>20 order by avg(m.rt_audience_score) desc, md.director_name limit 20";
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
@@ -432,7 +432,7 @@ public class Database
     {
         try
         {
-            String query = "SELECT ma.actor_name, avg(m.rt_audience_score) FROM movie_actor AS ma, movie AS m WHERE ma.movie_id = m.id group by ma.actor_name HAVING avg(rt_audience_score) > (select avg(rt_audience_score) from movie) order by count(*) desc limit 0,20";
+            String query = "SELECT distinct ma.actor_name, avg(m.rt_audience_score) FROM movie_actor AS ma, movie AS m WHERE ma.movie_id = m.id group by ma.actor_name HAVING count(*) > 30 order by avg(m.rt_audience_score) desc, ma.actor_name limit 20";
             Statement statement = this.connection.createStatement();
             ResultSet result = statement.executeQuery(query);
             LinkedList<HashMap<String, String>> listOfResults = new LinkedList<HashMap<String,String>>();
