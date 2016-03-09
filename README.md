@@ -77,12 +77,12 @@ This will be the driver that will run the command line interface. This file is i
 
 
 ##Commands to run Main.java
-javac Main.java
+javac Main.java;
 java -cp ":../lib/*" Main
 
 
 ##Commands to run FLKR_CLI
-javac FLKR_CLI.java
+javac FLKR_CLI.java;
 java -cp ":../lib/*" FLKR_CLI
 
 
